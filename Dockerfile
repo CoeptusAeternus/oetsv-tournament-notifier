@@ -1,10 +1,11 @@
 FROM python:3.12-slim
 
+RUN apt-get update && apt-get install -y cron
+
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
+ADD . .
+
 RUN pip install -r requirements.txt
 
-ADD . /app
-
-CMD ["python", "mailer.py"]
+CMD ["cron", "-f"]
