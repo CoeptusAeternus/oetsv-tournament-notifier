@@ -29,7 +29,7 @@ def add_to_notified_file(tournament: ShortTournament) -> None:
 def main():
     current_tournaments = get_tournaments()
     
-    if STARTUP_RUN:
+    if STARTUP_RUN: # TODO this needs to check if the file exists or is empty
         create_notified_file()
         for tournament in current_tournaments:
             add_to_notified_file(tournament)
