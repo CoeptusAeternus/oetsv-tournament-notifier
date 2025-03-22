@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import ClassVar
 
 from .tournamet_models import ShortTournament
 
@@ -7,8 +8,6 @@ class Mail(BaseModel):
     
     tournament: ShortTournament
     
-    def __init__(self, tournament: ShortTournament):
-        self.tournament = tournament
     
     def format_datetime(self, dt) -> str:
         return dt.strftime("%d.%m.%Y")
@@ -24,28 +23,23 @@ class Mail(BaseModel):
 
 class NewTournamentMail(Mail):
     
-    subject = "Neues Turnier im ÖTSV-Kalender gefunden: {}"
-    body = \
+    subject: ClassVar[str] = "Neues Turnier im ÖTSV-Kalender gefunden: {}"
+    body: ClassVar[str] = \
     """
     Informationen:
     Bezeichnung: {}
     Datum: {}
     Kalender: https://www.tanzsportverband.at/kalender/
     """
-    sender = "Neues Turnier Mitteilung"
-    
-    def __init__(self, tournament: ShortTournament):
-        super().__init__tournament
+    sender: ClassVar[str] = "Neues Turnier Mitteilung"
+
 
 class NennschlussMail(Mail):
     
-    subject = "Nennschluss für Turnier {}"
-    body = \
+    subject: ClassVar[str] = "Nennschluss für Turnier {}"
+    body: ClassVar[str] = \
     """
     Der Nennschluss für das Turnier {} am {} ist vorbei.
     https://nennungen.schwarzgold.at
     """
-    sender = "Nennschluss Erinnerung"
-    
-    def __init__(self, tournament: ShortTournament):
-        super().__init__(tournament)
+    sender: ClassVar[str] = "Nennschluss Erinnerung"
