@@ -11,4 +11,5 @@ if [ $EXIT_CODE -ne 0 ]; then
 fi
 
 # Start cron in the foreground
+echo "Starting cron"
 exec cron -f
