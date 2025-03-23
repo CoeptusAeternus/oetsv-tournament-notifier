@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Execute entrypoint.py and capture its exit code
-/app/entrypoint/entrypoint.py
+/app/entrypoint.py
 EXIT_CODE=$?
 
 # If entrypoint.py fails, exit with the same code
