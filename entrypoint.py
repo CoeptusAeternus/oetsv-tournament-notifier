@@ -4,7 +4,7 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("Setup")
-logging.info("Starting Setup")
+logger.info("Starting Setup")
 
 #check all necessary environment variables are set
 REQUIRED_ENV_DICT ={
