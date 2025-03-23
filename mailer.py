@@ -18,6 +18,9 @@ RECIPIENTS = list(map(lambda x: x.strip(), RECIPIENTS))
 if not SMTP_SERVER or not SMTP_PORT or not SMTP_USERNAME or not SMTP_PASSWORD:
     raise ValueError("SMTP_SERVER, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD must be set")
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
 def send_email(mail: Mail):
     
     subject, body, sender = mail.format_for_sending(RECIPIENTS)
@@ -27,24 +30,24 @@ def send_email(mail: Mail):
     msg['Subject'] = subject
     msg.attach(MIMEText(body, 'plain', 'utf-8'))    
     
-    logging.debug(type(mail))
+    logger.debug(type(mail))
     
-    logging.debug(f"attempting mail server login on {SMTP_SERVER}:{SMTP_PORT}")
+    logger.debug(f"attempting mail server login on {SMTP_SERVER}:{SMTP_PORT}")
     try:
         with SMTP(SMTP_SERVER, SMTP_PORT) as smtp:
             smtp.ehlo()
             smtp.starttls()
             smtp.ehlo()
-            logging.debug(f"attempting mail server login with {SMTP_USERNAME}")
+            logger.debug(f"attempting mail server login with {SMTP_USERNAME}")
             smtp.login(SMTP_USERNAME, SMTP_PASSWORD)
-            logging.debug("login successfull")
+            logger.debug("login successfull")
             
             for recipient in RECIPIENTS:
-                logging.debug(f"attempting to send email to {recipient}")
+                logger.debug(f"attempting to send email to {recipient}")
                 msg['To'] = recipient
                 smtp.send_message(msg)
-                logging.info("sent {} to {} for tid {}".format(type(mail), recipient, mail.tournament.id) )
+                logger.info("sent {} to {} for tid {}".format(type(mail), recipient, mail.tournament.id) )
                 
     except Exception as e:
-        logging.error(f"Failed to send email: {e}")
+        logger.error(f"Failed to send email: {e}")
         return
