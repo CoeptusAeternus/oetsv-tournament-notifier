@@ -19,7 +19,7 @@ REQUIRED_ENV_DICT ={
 missing_env_vars = [key for key, value in REQUIRED_ENV_DICT.items() if value is None]
 
 if missing_env_vars:
-    logging.error(f"Missing environment variables: {missing_env_vars}")
+    logger.error(f"Missing environment variables: {missing_env_vars}")
     exit(1)
 
 # setup notified file
@@ -27,12 +27,12 @@ if missing_env_vars:
 NOTIFIED_FILE = os.getenv("NOTIFIED_PATH")
 
 if not os.path.exists(NOTIFIED_FILE):
-    logging.info(f"Creating file {NOTIFIED_FILE}")
+    logger.info(f"Creating file {NOTIFIED_FILE}")
     with open(NOTIFIED_FILE, "w") as f:
         f.write("")
 else:
-    logging.info(f"File {NOTIFIED_FILE} already exists")
-    logging.warning("File will be overwritten")
+    logger.info(f"File {NOTIFIED_FILE} already exists")
+    logger.warning("File will be overwritten")
     os.remove(NOTIFIED_FILE)
     with open(NOTIFIED_FILE, "w") as f:
         f.write("")
@@ -41,13 +41,13 @@ from api_service import get_tournaments
 
 tournaments = get_tournaments()
 if not tournaments:
-    logging.warning("No tournaments found")
+    logger.warning("No tournaments found")
 
 for t in tournaments:
     with open(NOTIFIED_FILE, "a") as f:
         f.write(f"{t.id}\n")
 
-logging.info(f"Added {len(tournaments)} tournaments to {NOTIFIED_FILE}")
+logger.info(f"Added {len(tournaments)} tournaments to {NOTIFIED_FILE}")
 
-logging.info("All necessary environment variables are set - proceeding with Startup")
+logger.info("All necessary environment variables are set - proceeding with Startup")
     
