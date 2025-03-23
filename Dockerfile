@@ -14,8 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Set correct permissions
 RUN chmod +x /app/new_tournament_notifier.py \
     /app/nennschluss_notifier.py \
-    /app/entrypoint/entrypoint.sh \
-    /app/entrypoint/entrypoint.py
+    /app/entrypoint.sh \
+    /app/entrypoint.py
 
 # Set up crontab
 COPY cronfile /etc/cron.d/container_cron
