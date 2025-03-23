@@ -22,4 +22,4 @@ COPY cronfile /etc/cron.d/container_cron
 RUN chmod 0644 /etc/cron.d/container_cron && crontab /etc/cron.d/container_cron
 
 # Use the entrypoint script
-CMD ["/app/entrypoint/entrypoint.sh"]
+CMD ["/app/entrypoint.sh"]
