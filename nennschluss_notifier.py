@@ -12,7 +12,7 @@ from models.mail import NennschlussMail
 
 DAYS_BEFORE_TOURNAMENT = os.getenv("DAYS_BEFORE_TOURNAMENT", 13)
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 logger = logging.getLogger("nennschluss_notifier")
 logger.setLevel(logging.DEBUG)
