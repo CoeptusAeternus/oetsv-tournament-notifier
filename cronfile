@@ -1,0 +1,2 @@
+0 6 * * * /app/nennschluss_notifier.py >> /proc/1/fd/1 2>> /proc/1/fd/2
+0 * * * * /app/new_tournament_notifier.py >> /proc/1/fd/1 2>> /proc/1/fd/2
