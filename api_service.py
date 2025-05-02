@@ -1,20 +1,22 @@
 import httpx
 import logging
+import os
 from typing import List
 from pydantic import TypeAdapter
 
 from models.tournamet_models import ShortTournament
 
-API_URL = "https://oetsv.seiberte.ch/list"
 
 logger = logging.getLogger("api_service")
 logger.setLevel(logging.DEBUG)
 
 def get_tournaments() -> List[ShortTournament]:
     
+    api_url = os.getenv("API_URL")
+    
     list_adapter = TypeAdapter(List[ShortTournament])
     
-    response = httpx.get(API_URL)
+    response = httpx.get(api_url)
     response.raise_for_status()
     
     if response.status_code != 200:
