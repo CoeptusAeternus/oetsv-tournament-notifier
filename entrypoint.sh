@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# set container environment variables for cron
+printenv | grep -v "no_proxy" >> /etc/environment
+
 # Execute entrypoint.py and capture its exit code
 /app/entrypoint.py
 EXIT_CODE=$?
