@@ -1,2 +1,2 @@
-0 6 * * * bash -lc /app/nennschluss_notifier.py >> /proc/1/fd/1 2>> /proc/1/fd/2
-0 * * * * bash -lc /app/new_tournament_notifier.py >> /proc/1/fd/1 2>> /proc/1/fd/2
+0 6 * * * python /app/nennschluss.py >> /proc/1/fd/1 2>> /proc/1/fd/2
+0 * * * * python /app/new_tournament.py >> /proc/1/fd/1 2>> /proc/1/fd/2
