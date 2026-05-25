@@ -1,11 +1,13 @@
 """Email sending."""
 
+import logging
 from smtplib import SMTP
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.utils import formataddr
 from models import Mail
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 def send_email(mail: Mail, smtp_server: str, smtp_port: int, smtp_user: str, smtp_pass: str, recipients: list[str]) -> None:
     """Send email."""
@@ -26,4 +28,8 @@ def send_email(mail: Mail, smtp_server: str, smtp_port: int, smtp_user: str, smt
         
         for recipient in recipients:
             msg["To"] = recipient
-            smtp.send_message(msg)
+            try:
+                smtp.send_message(msg)
+            except Exception as e:
+                logging.error(f"Failed to send email to {recipient}: {e}")
+    
