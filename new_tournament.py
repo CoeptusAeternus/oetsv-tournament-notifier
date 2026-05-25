@@ -2,14 +2,17 @@
 """Notify about new tournaments."""
 
 import sys
+import logging
 from config import SMTP_SERVER, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD, RECIPIENTS, API_URL, NOTIFIED_PATH
 from api import get_tournaments
 from mail import send_email
 from models import NewTournamentMail
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 def main():
     try:
+        logging.info("Starting new tournament notification process")
         # Get current tournaments from API
         tournaments = get_tournaments(API_URL)
         
@@ -30,10 +33,10 @@ def main():
             with open(NOTIFIED_PATH, "a") as f:
                 f.write(f"{tournament.id}\n")
             
-            print(f"Notified about tournament {tournament.id}: {tournament.name}")
+            logging.info(f"Notified about tournament {tournament.id}: {tournament.name}")
     
     except Exception as e:
-        print(f"Error: {e}", file=sys.stderr)
+        logging.error(f"Error: {e}")
         sys.exit(1)
 
 
